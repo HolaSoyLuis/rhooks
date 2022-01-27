@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const UseEffectExample = () => {
 
@@ -28,10 +29,43 @@ const UseEffectExample = () => {
         setCount(count - 1);
     }
 
-    const [message, setMessage] = useState("Hello world");
+    const [message, setMessage] = useState('Hello world');
 
     const changeMessage = () => {
         setMessage(message + ' :D ');
+        console.log(users);
+    }
+
+    // fetching and refetching data from a server
+    const [users, setUsers] = useState([]);
+    const endPoint = 'https://my-json-server.typicode.com/ifeanyidike/jsondata/users';
+
+    const fetchUsers = async () => {
+        const { data } = await axios.get(endPoint);
+        setUsers(data);
+    }
+
+    const fetchUsers2 = async () => {
+        // no works
+        // const response = await fetch(endPoint);
+        // response = response.json();
+        // console.log(response)
+        // setUsers(response);
+
+        // works :D
+        await fetch(endPoint)
+        .then(response => response.json())
+        .then(data => {
+            setUsers(data);
+        })
+    }
+
+    useEffect(() => {
+        fetchUsers2();
+    }, []);
+
+    const showFetchedUsers = () => {
+        console.log(users);
     }
 
     return(
@@ -41,6 +75,7 @@ const UseEffectExample = () => {
             <button type="button" className="btn btn-warning mx-2" onClick={increment}>Increment</button>
             <div>Message: {message}</div>
             <button type="button" className="btn btn-primary mx-2" onClick={changeMessage}>Alter message</button>
+            <button type="button" className="btn btn-secondary mx-2" onClick={showFetchedUsers}>Show fetched users</button>
         </div>
     );
 }
