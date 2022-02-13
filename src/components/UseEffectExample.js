@@ -38,7 +38,7 @@ const UseEffectExample = () => {
 
     // fetching and refetching data from a server
     const [users, setUsers] = useState([]);
-    const endPoint = 'https://my-json-server.typicode.com/ifeanyidike/jsondata/users';
+    const endPoint = 'https://jsonplaceholder.typicode.com/users';
 
     const fetchUsers = async () => {
         const { data } = await axios.get(endPoint);
@@ -46,7 +46,7 @@ const UseEffectExample = () => {
     }
 
     const fetchUsers2 = async () => {
-        // no works
+        // not works
         // const response = await fetch(endPoint);
         // response = response.json();
         // console.log(response)
@@ -68,7 +68,9 @@ const UseEffectExample = () => {
         console.log(users);
     }
 
-    return(
+    const renderedUsers = users.map(user => <li>{ user.name }, { user.username }</li>);
+
+    return (
         <div>
             <div>Current count value = {count}</div>
             <button type="button" className="btn btn-danger mx-2" onClick={decrement}>Decrement</button>
@@ -76,6 +78,7 @@ const UseEffectExample = () => {
             <div>Message: {message}</div>
             <button type="button" className="btn btn-primary mx-2" onClick={changeMessage}>Alter message</button>
             <button type="button" className="btn btn-secondary mx-2" onClick={showFetchedUsers}>Show fetched users</button>
+            {renderedUsers}
         </div>
     );
 }

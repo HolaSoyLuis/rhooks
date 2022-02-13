@@ -1,21 +1,21 @@
 import React from 'react';
 import Navbar from './components/Navbar.js';
+import { BrowserRouter, Switch, Routes, Route } from 'react-router-dom';
 import UseStateExample from './components/UseStateExample';
 import UseEffectExample from './components/UseEffectExample';
 import UseContextExample from './components/UseContextExample';
 
 const App = () => {
     return (
-        <div className="container">
-            <div className="row">
-                <div className="col">
-                    <Navbar />
-                    <UseStateExample />
-                    <UseEffectExample />
-                    <UseContextExample />
-                </div>
-            </div>
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<App />}>
+                    <Route path="state" element={<UseStateExample />} />
+                    <Route path="effect" element={<UseEffectExample />} />
+                    <Route path="context" element={<UseContextExample />} />
+                </Route>
+            </Routes>
+        </BrowserRouter>
     );
 }
 
